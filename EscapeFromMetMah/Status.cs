@@ -4,8 +4,9 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class TestClass
+    public enum Status
     {
-        public int Number = 17;
+        Active,
+        Inactive
     }
 }
