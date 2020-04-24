@@ -14,6 +14,7 @@ namespace EscapeFromMetMah
         
         public Bot(string name, Dialogue dialogue, Point location)
         {
+            Name = name;
             Dialogue = dialogue;
             Location = location;
         }

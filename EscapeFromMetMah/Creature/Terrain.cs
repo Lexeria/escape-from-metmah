@@ -17,7 +17,7 @@ namespace EscapeFromMetMah
 
         public Point GetLocation() => Location;
 
-        public string GetName() => "Terratin";
+        public string GetName() => "Terrain";
 
         public Status GetStatus() => Status;
     }
