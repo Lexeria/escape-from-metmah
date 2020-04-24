@@ -5,10 +5,13 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class Pivo : ICreature
+    class Player : ICreature
     {
+        public readonly string Name;
         public Status Status { get; set; }
-        public Point Location { get; set; }
+        public double ProcentBurnout { get; private set; }
+        public Superpower Superpower { get; private set; }
+        public Point Location { get; private set; }
 
         public CreatureCommand Act(int x, int y)
         {
@@ -17,7 +20,7 @@ namespace EscapeFromMetMah
 
         public Point GetLocation() => Location;
 
-        public string GetName() => "Pivo";
+        public string GetName() => Name;
 
         public Status GetStatus() => Status;
     }

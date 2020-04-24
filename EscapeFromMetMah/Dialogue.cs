@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class Dialogue
+    public class Dialogue
     {
         public readonly string Text;
         public List<string> Answers { get; private set; }

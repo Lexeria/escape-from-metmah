@@ -5,10 +5,10 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class Pivo : ICreature
+    class Stairs : ICreature
     {
-        public Status Status { get; set; }
         public Point Location { get; set; }
+        public Status Status { get; set; }
 
         public CreatureCommand Act(int x, int y)
         {
@@ -17,7 +17,7 @@ namespace EscapeFromMetMah
 
         public Point GetLocation() => Location;
 
-        public string GetName() => "Pivo";
+        public string GetName() => "Stairs";
 
         public Status GetStatus() => Status;
     }

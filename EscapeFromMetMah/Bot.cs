@@ -5,18 +5,28 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class Bot
+    class Bot : ICreature
     {
+        private readonly string Name;
         public Status Status { get; set; }
         public readonly Dialogue Dialogue;
-        public Vector Location { get; private set; }
+        public Point Location { get; private set; }
         
-        public Bot(Dialogue dialogue, Vector location)
+        public Bot(string name, Dialogue dialogue, Point location)
         {
             Dialogue = dialogue;
             Location = location;
         }
 
-        // Возможны методы на передвижение
+        public string GetName() => Name;
+
+        public Point GetLocation() => Location;
+
+        public Status GetStatus() => Status;
+
+        public CreatureCommand Act(int x, int y)
+        {
+            return new CreatureCommand();
+        }
     }
 }
