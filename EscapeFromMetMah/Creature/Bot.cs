@@ -25,9 +25,12 @@ namespace EscapeFromMetMah
 
         public Status GetStatus() => Status;
 
-        public CreatureCommand Act(int x, int y)
+        public CreatureCommand Act(Level level, int x, int y)
         {
+            // Тут должен быть супер мега крутой алгоритм поиска игрока и движения за ним
             return new CreatureCommand();
         }
+
+        public bool IsConflict(ICreature conflictedObject) => conflictedObject is Player;
     }
 }

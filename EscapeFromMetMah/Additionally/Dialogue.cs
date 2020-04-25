@@ -25,6 +25,11 @@ namespace EscapeFromMetMah
         }
 
         public bool IsTrueAnswer(string answer) => answer == CorrectAnswer;
-        public bool IsTrueAnswer(int index) => Answers[index] == CorrectAnswer;
+        public bool IsTrueAnswer(int index)
+        {
+            if (index < 0 || index >= Answers.Count)
+                throw new ArgumentException();
+            return Answers[index] == CorrectAnswer;
+        }
     }
 }

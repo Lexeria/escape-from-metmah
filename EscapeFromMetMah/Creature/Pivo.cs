@@ -10,7 +10,7 @@ namespace EscapeFromMetMah
         public Status Status { get; set; }
         public Point Location { get; set; }
 
-        public CreatureCommand Act(int x, int y)
+        public CreatureCommand Act(Level level, int x, int y)
         {
             return new CreatureCommand();
         }
@@ -20,5 +20,7 @@ namespace EscapeFromMetMah
         public string GetName() => "Pivo";
 
         public Status GetStatus() => Status;
+
+        public bool IsConflict(ICreature conflictedObject) => conflictedObject is Player;
     }
 }

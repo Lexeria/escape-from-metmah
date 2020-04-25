@@ -10,6 +10,7 @@ namespace EscapeFromMetMah
         string GetName();
         Point GetLocation();
         Status GetStatus();
-        CreatureCommand Act(int x, int y);
+        bool IsConflict(ICreature conflictedObject);
+        CreatureCommand Act(Level level, int x, int y);
     }
 }

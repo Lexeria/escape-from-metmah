@@ -10,7 +10,7 @@ namespace EscapeFromMetMah
         public Point Location { get; set; }
         public Status Status { get; set; }
 
-        public CreatureCommand Act(int x, int y)
+        public CreatureCommand Act(Level level, int x, int y)
         {
             return new CreatureCommand();
         }
@@ -20,5 +20,7 @@ namespace EscapeFromMetMah
         public string GetName() => "Terrain";
 
         public Status GetStatus() => Status;
+
+        public bool IsConflict(ICreature conflictedObject) => false;
     }
 }
