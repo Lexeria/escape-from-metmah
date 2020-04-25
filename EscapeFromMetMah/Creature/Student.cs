@@ -5,23 +5,15 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class Bot : ICreature
+    class Student : ICreature
     {
-        private readonly string Name;
         public Status Status { get; set; }
         public readonly Dialogue Dialogue;
-        public Point Location { get; private set; }
         
-        public Bot(string name, Dialogue dialogue, Point location)
+        public Student(Dialogue dialogue)
         {
-            Name = name;
             Dialogue = dialogue;
-            Location = location;
         }
-
-        public string GetName() => Name;
-
-        public Point GetLocation() => Location;
 
         public Status GetStatus() => Status;
 

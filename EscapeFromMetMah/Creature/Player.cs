@@ -9,11 +9,9 @@ namespace EscapeFromMetMah
 {
     class Player : ICreature
     {
-        public readonly string Name;
         public Status Status { get; set; }
         public double ProcentBurnout { get; private set; }
         public Superpower Superpower { get; private set; }
-        public Point Location { get; private set; }
 
         public CreatureCommand Act(Level level, int x, int y)
         {
@@ -35,13 +33,9 @@ namespace EscapeFromMetMah
             return new CreatureCommand();
         }
 
-        public Point GetLocation() => Location;
-
-        public string GetName() => Name;
-
         public Status GetStatus() => Status;
 
         public bool IsConflict(ICreature conflictedObject) =>
-            conflictedObject is Bot || conflictedObject is Pivo;
+            conflictedObject is Student || conflictedObject is Beer;
     }
 }

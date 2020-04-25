@@ -5,19 +5,14 @@ using System.Text;
 
 namespace EscapeFromMetMah
 {
-    class Pivo : ICreature
+    class Beer : ICreature
     {
         public Status Status { get; set; }
-        public Point Location { get; set; }
 
         public CreatureCommand Act(Level level, int x, int y)
         {
             return new CreatureCommand();
         }
-
-        public Point GetLocation() => Location;
-
-        public string GetName() => "Pivo";
 
         public Status GetStatus() => Status;
 

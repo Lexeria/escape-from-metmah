@@ -8,13 +8,16 @@ namespace EscapeFromMetMah
 {
     class GameState
     {
-        private Level CurrentLevel;
+        public Level CurrentLevel { get; set; }
+        private int IndexCurrentLevel;
         private List<Level> Levels;
         public List<CreatureAnimation> Animations = new List<CreatureAnimation>();
+        public bool IsGameOver { get; private set; }
 
         public GameState(List<Level> levels)
         {
             Levels = levels;
+            CurrentLevel = levels[0];
         }
 
         public void BeginAct()
@@ -28,6 +31,7 @@ namespace EscapeFromMetMah
 
                     for (int i = 0; i < creatures.Count; i++)
                     {
+                        if (creatures[i] == null) continue;
                         var command = creatures[i].Act(CurrentLevel, x, y);
 
                         if (x + command.deltaX < 0 || x + command.deltaX >= CurrentLevel.Width || y + command.deltaY < 0 ||
@@ -53,6 +57,20 @@ namespace EscapeFromMetMah
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
                     CurrentLevel.Map[x, y] = SelectWinnerCandidatePerLocation(creaturesPerLocation, x, y);
+
+            if (CurrentLevel.IsOver)
+            {
+                if (IndexCurrentLevel + 1 < Levels.Count)
+                {
+                    IndexCurrentLevel += 1;
+                    CurrentLevel = Levels[IndexCurrentLevel];
+                }
+                else
+                    IsGameOver = true;
+            }
+
+            if (IsGameOver)
+                return;
         }
 
         private List<ICreature> SelectWinnerCandidatePerLocation(List<ICreature>[,] creatures, int x, int y)
@@ -64,13 +82,13 @@ namespace EscapeFromMetMah
                     if (rival != candidate && candidate.IsConflict(rival))
                     {
                         // Решение всех возможных конфликтов
-                        if (candidate is Pivo && rival is Player)
+                        if (candidate is Beer && rival is Player)
                         {
                             aliveCandidates.Remove(candidate);
-                            CurrentLevel.countPivo -= 1;
+                            CurrentLevel.CountBeer -= 1;
                         }
 
-                        if (candidate is Player && rival is Bot)
+                        if (candidate is Player && rival is Student)
                         {
                             // Придумать, как выкидывать диалог со студентом.
                         }
