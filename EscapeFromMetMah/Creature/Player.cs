@@ -17,7 +17,7 @@ namespace EscapeFromMetMah
 
         public CreatureCommand Act(Level level, int x, int y)
         {
-            if (y + 1 <= level.Height - 1 && level.Map[x, y + 1].Any())
+            if (y + 1 <= level.Height - 1 && !level.Map[x, y + 1].Any())
                 return new CreatureCommand { deltaY = 1 };
 
             if (level.keyPressed == Keys.Up && y - 1 >= 0 && level.Map[x, y].Any(x => x is Stairs))
