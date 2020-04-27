@@ -37,7 +37,7 @@ namespace EscapeFromMetMah
 
         public bool IsConflict(ICreature conflictedObject)
         {
-            if (Status == Status.Active)
+            if (Status == Status.Active && conflictedObject is Player)
             {
                 Status = Status.Inactive;
                 return true;

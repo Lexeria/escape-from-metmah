@@ -6,6 +6,6 @@ namespace EscapeFromMetMah
 {
     class Superpower
     {
-        public Status Stutus { get; set; }
+        public Status Status { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace EscapeFromMetMah
         private readonly string[] answers;
         private readonly string CorrectAnswer;
 
+        public int CountAnswers => answers.Length;
+
         public Dialogue(string text, string[] answers, string correctAnswer)
         {
             Text = text;

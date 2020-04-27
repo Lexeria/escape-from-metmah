@@ -22,6 +22,15 @@ namespace EscapeFromMetMah
 
         public void BeginAct()
         {
+            if (CurrentLevel.CurrentDialogue != null)
+            {
+                var index = (int)CurrentLevel.KeyPressed - 49;
+                if (index < 0 || index >= CurrentLevel.CurrentDialogue.CountAnswers)
+                    return;
+                if (CurrentLevel.CurrentDialogue.IsTrueAnswer(index))
+                    CurrentLevel.CurrentDialogue = null;
+                return;
+            }
             Animations.Clear();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
@@ -54,6 +63,8 @@ namespace EscapeFromMetMah
 
         public void EndAct()
         {
+            if (CurrentLevel.CurrentDialogue != null)
+                return;
             var creaturesPerLocation = GetCandidatesPerLocation();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
@@ -69,9 +80,6 @@ namespace EscapeFromMetMah
                 else
                     IsGameOver = true;
             }
-
-            if (IsGameOver)
-                return;
         }
 
         private List<ICreature> SelectWinnerCandidatePerLocation(List<ICreature>[,] creatures, int x, int y)
@@ -99,6 +107,7 @@ namespace EscapeFromMetMah
 
             if (candidate is Student && rival is Player)
             {
+                CurrentLevel.CurrentDialogue = (candidate as Student).Dialogue;
                 // Придумать, как выкидывать диалог со студентом.
             }
         }
