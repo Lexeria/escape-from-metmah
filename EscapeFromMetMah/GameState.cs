@@ -43,6 +43,7 @@ namespace EscapeFromMetMah
                             {
                                 Command = command,
                                 Creature = creatures[i],
+                                Location = new Point(x, y),
                                 TargetLogicalLocation = new Point(x + command.deltaX, y + command.deltaY)
                             });
                     }
@@ -90,7 +91,12 @@ namespace EscapeFromMetMah
 
                         if (candidate is Player && rival is Student)
                         {
-                            // Придумать, как выкидывать диалог со студентом.
+                            var student = rival as Student;
+                            if (student.Status == Status.Active)
+                            {
+                                // Придумать, как выкидывать диалог со студентом.
+                                student.Status = Status.Inactive;
+                            }
                         }
                     }
 
