@@ -18,16 +18,21 @@ namespace EscapeFromMetMah
             if (y + 1 <= level.Height - 1 && !level.Map[x, y + 1].Any())
                 return new CreatureCommand { deltaY = 1 };
 
-            if (level.keyPressed == Keys.Up && y - 1 >= 0 && level.Map[x, y].Any(x => x is Stairs))
+            if (level.keyPressed == Keys.Up && y - 1 >= 0 &&
+                level.Map[x, y].Any(x => x is Stairs) &&
+                !level.Map[x, y - 1].Any(x => x is Terrain))
                 return new CreatureCommand { deltaY = -1 };
 
-            if (level.keyPressed == Keys.Down && y + 1 <= level.Height - 1 && level.Map[x, y + 1].Any(x => x is Stairs))
+            if (level.keyPressed == Keys.Down && y + 1 <= level.Height - 1 &&
+                level.Map[x, y + 1].Any(x => x is Stairs))
                 return new CreatureCommand { deltaY = 1 };
 
-            if (level.keyPressed == Keys.Left && x - 1 >= 0 && !level.Map[x - 1, y].Any(x => x is Terrain))
+            if (level.keyPressed == Keys.Left && x - 1 >= 0 &&
+                !level.Map[x - 1, y].Any(x => x is Terrain))
                 return new CreatureCommand { deltaX = -1 };
 
-            if (level.keyPressed == Keys.Right && x + 1 <= level.Width - 1 && !level.Map[x + 1, y].Any(x => x is Terrain))
+            if (level.keyPressed == Keys.Right && x + 1 <= level.Width - 1 &&
+                !level.Map[x + 1, y].Any(x => x is Terrain))
                 return new CreatureCommand { deltaX = 1 };
 
             return new CreatureCommand();
