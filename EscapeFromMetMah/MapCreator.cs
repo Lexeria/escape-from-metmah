@@ -16,11 +16,11 @@ namespace EscapeFromMetMah
             var result = new List<ICreature>[rows[0].Length, rows.Length];
             for (var x = 0; x < rows[0].Length; x++)
                 for (var y = 0; y < rows.Length; y++)
-                    result[x, y] = new List<ICreature> { CreateCreatureBySymbol(rows[y][x], x, y) };
+                    result[x, y] = new List<ICreature> { CreateCreatureBySymbol(rows[y][x]) };
             return result;
         }
 
-        private static ICreature CreateCreatureBySymbol(char symbol, int x, int y)
+        private static ICreature CreateCreatureBySymbol(char symbol)
         {
             switch (symbol)
             {
@@ -34,8 +34,7 @@ namespace EscapeFromMetMah
                     // Здесь должно быть рандомное присвоение диалога
                     return new Student(new Dialogue("Do you love me?",
                                                 new string[] { "Yes", "No" },
-                                                "Yes"),
-                                       new Point(x, y));
+                                                "Yes"));
                 case 'B':
                     return new Beer();
                 case ' ':

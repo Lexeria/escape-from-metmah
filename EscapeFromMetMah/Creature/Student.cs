@@ -10,13 +10,11 @@ namespace EscapeFromMetMah
     {
         public Status Status { get; private set; }
         public readonly Dialogue Dialogue;
-        public Point Location { get; set; }
         
-        public Student(Dialogue dialogue, Point location)
+        public Student(Dialogue dialogue)
         {
             Dialogue = dialogue;
             Status = Status.Active;
-            Location = location;
         }
 
         public Status GetStatus() => Status;
