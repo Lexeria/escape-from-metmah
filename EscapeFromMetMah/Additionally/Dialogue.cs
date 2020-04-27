@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EscapeFromMetMah
 {
     public class Dialogue
     {
         public readonly string Text;
-        public List<string> Answers { get; private set; }
+        private readonly string[] answers;
         private readonly string CorrectAnswer;
 
-        public Dialogue(string text, List<string> answers, string correctAnswer)
+        public Dialogue(string text, string[] answers, string correctAnswer)
         {
             Text = text;
-            Answers = answers;
+            this.answers = answers;
             CorrectAnswer = correctAnswer;
         }
 
-        public Dialogue(string text, List<string> answers, int index)
+        public Dialogue(string text, string[] answers, int index)
         {
             Text = text;
-            Answers = answers;
+            this.answers = answers;
             CorrectAnswer = answers[index];
+        }
+
+        public IEnumerable<string> GetAnswers()
+        {
+            foreach (var e in answers)
+                yield return e;
         }
 
         public bool IsTrueAnswer(string answer) => answer == CorrectAnswer;
         public bool IsTrueAnswer(int index)
         {
-            if (index < 0 || index >= Answers.Count)
+            if (index < 0 || index >= answers.Length)
                 throw new ArgumentException();
-            return Answers[index] == CorrectAnswer;
+            return answers[index] == CorrectAnswer;
         }
     }
 }

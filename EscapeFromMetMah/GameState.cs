@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace EscapeFromMetMah
 {
     class GameState
     {
-        public Level CurrentLevel { get; set; }
+        public Level CurrentLevel { get; private set; }
         private int IndexCurrentLevel;
-        private List<Level> Levels;
-        public List<CreatureAnimation> Animations = new List<CreatureAnimation>();
+        private readonly List<Level> Levels;
+        public List<CreatureAnimation> Animations { get; private set; }
         public bool IsGameOver { get; private set; }
 
         public GameState(List<Level> levels)
         {
             Levels = levels;
             CurrentLevel = levels[0];
+            Animations = new List<CreatureAnimation>();
         }
 
         public void BeginAct()
@@ -83,24 +83,24 @@ namespace EscapeFromMetMah
                     if (rival != candidate && candidate.IsConflict(rival))
                     {
                         // Решение всех возможных конфликтов
-                        if (candidate is Beer && rival is Player)
-                        {
-                            aliveCandidates.Remove(candidate);
-                            CurrentLevel.CountBeer -= 1;
-                        }
-
-                        if (candidate is Player && rival is Student)
-                        {
-                            var student = rival as Student;
-                            if (student.Status == Status.Active)
-                            {
-                                // Придумать, как выкидывать диалог со студентом.
-                                student.Status = Status.Inactive;
-                            }
-                        }
+                        ResolvingConflict(aliveCandidates, candidate, rival);
                     }
 
             return aliveCandidates;
+        }
+
+        private void ResolvingConflict(List<ICreature> aliveCandidates, ICreature candidate, ICreature rival)
+        {
+            if (candidate is Beer && rival is Player)
+            {
+                aliveCandidates.Remove(candidate);
+                CurrentLevel.CountBeer -= 1;
+            }
+
+            if (candidate is Student && rival is Player)
+            {
+                // Придумать, как выкидывать диалог со студентом.
+            }
         }
 
         private List<ICreature>[,] GetCandidatesPerLocation()

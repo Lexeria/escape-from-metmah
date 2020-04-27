@@ -33,7 +33,7 @@ namespace EscapeFromMetMah
                 case 'S':
                     // Здесь должно быть рандомное присвоение диалога
                     return new Student(new Dialogue("Do you love me?",
-                                                new List<string> { "Yes", "No" },
+                                                new string[] { "Yes", "No" },
                                                 "Yes"),
                                        new Point(x, y));
                 case 'B':

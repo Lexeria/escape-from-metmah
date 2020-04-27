@@ -7,18 +7,28 @@ namespace EscapeFromMetMah
 {
     public class Level
     {
-        public List<ICreature>[,] Map; // Лист, потому что в одной клетке могут находиться несколько сущностей.
+        public readonly List<ICreature>[,] Map; // Лист, потому что в одной клетке могут находиться несколько сущностей.
         public bool IsOver => CountBeer < 1;
         public int CountBeer { get; set; }
-        public int Width => Map.GetLength(0);
-        public int Height => Map.GetLength(1);
-        public Keys keyPressed;
+        public readonly int Width;
+        public readonly int Height;
+        public Keys KeyPressed; // Для управления игроком на уровне.
+        public Dialogue CurrentDialogue { get; set; }
 
-        public Level(List<ICreature>[,] Map, int countPivo)
+        public Level(List<ICreature>[,] map, int countBeer)
         {
-            CountBeer = countPivo;
-            this.Map = Map;
-            // Генерация карты?
+            CountBeer = countBeer;
+            Map = map;
+            Width = Map.GetLength(0);
+            Height = Map.GetLength(1);
+        }
+
+        public Level(string map, int countBeer)
+        {
+            CountBeer = countBeer;
+            Map = MapCreator.CreateMap(map);
+            Width = Map.GetLength(0);
+            Height = Map.GetLength(1);
         }
     }
 }

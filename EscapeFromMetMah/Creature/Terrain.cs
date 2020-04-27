@@ -7,12 +7,9 @@ namespace EscapeFromMetMah
 {
     class Terrain : ICreature
     {
-        public Status Status { get; set; }
+        public Status Status { get; private set; }
 
-        public CreatureCommand Act(Level level, int x, int y)
-        {
-            return new CreatureCommand();
-        }
+        public CreatureCommand Act(Level level, int x, int y) => new CreatureCommand();
 
         public Status GetStatus() => Status;
 

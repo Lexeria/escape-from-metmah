@@ -8,7 +8,7 @@ namespace EscapeFromMetMah
 {
     class Student : ICreature
     {
-        public Status Status { get; set; }
+        public Status Status { get; private set; }
         public readonly Dialogue Dialogue;
         public Point Location { get; set; }
         
@@ -35,6 +35,15 @@ namespace EscapeFromMetMah
             return new CreatureCommand();
         }
 
-        public bool IsConflict(ICreature conflictedObject) => conflictedObject is Player;
+        public bool IsConflict(ICreature conflictedObject)
+        {
+            if (Status == Status.Active)
+            {
+                Status = Status.Inactive;
+                return true;
+            }
+
+            return false;
+        }
     }
 }

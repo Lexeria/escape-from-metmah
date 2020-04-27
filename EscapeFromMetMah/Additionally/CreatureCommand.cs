@@ -11,7 +11,5 @@ namespace EscapeFromMetMah
     {
         public int deltaX;
         public int deltaY;
-        public Status status;
-        public Dialogue dialogue;
     }
 }
