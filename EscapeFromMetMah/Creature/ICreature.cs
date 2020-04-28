@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
-namespace EscapeFromMetMah
+﻿namespace EscapeFromMetMah
 {
     public interface ICreature
     {

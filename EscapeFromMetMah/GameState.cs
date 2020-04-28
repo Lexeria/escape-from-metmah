@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace EscapeFromMetMah
 {
     class GameState
     {
-        public Level CurrentLevel { get; private set; }
+        private Level CurrentLevel;
         private int IndexCurrentLevel;
         private readonly List<Level> Levels;
-        public List<CreatureAnimation> Animations { get; private set; }
+        public List<CreatureAnimation> Animations { get; }
         public bool IsGameOver { get; private set; }
-        public bool IsDialogueActivated => CurrentLevel.CurrentDialogue != null;
+        public Dialogue CurrentDialogue { get; private set; }
+        public bool IsDialogueActivated => CurrentDialogue != null;
 
         public GameState(List<Level> levels)
         {
@@ -21,15 +23,19 @@ namespace EscapeFromMetMah
             Animations = new List<CreatureAnimation>();
         }
 
+        public void SetKeyPressed(Keys key) => CurrentLevel.KeyPressed = key;
+        public int GetWidthCurrentLevel() => CurrentLevel.Width;
+        public int GetHeightCurrentLevel() => CurrentLevel.Height;
+
         public void BeginAct()
         {
             if (IsDialogueActivated)
             {
                 var index = (int)CurrentLevel.KeyPressed - 49;
-                if (index < 0 || index >= CurrentLevel.CurrentDialogue.CountAnswers)
+                if (index < 0 || index >= CurrentDialogue.CountAnswers)
                     return;
-                if (CurrentLevel.CurrentDialogue.IsTrueAnswer(index))
-                    CurrentLevel.CurrentDialogue = null;
+                if (CurrentDialogue.IsTrueAnswer(index))
+                    CurrentDialogue = null;
                 return;
             }
             Animations.Clear();
@@ -44,8 +50,8 @@ namespace EscapeFromMetMah
                         if (creatures[i] == null) continue;
                         var command = creatures[i].Act(CurrentLevel, x, y);
 
-                        if (x + command.deltaX < 0 || x + command.deltaX >= CurrentLevel.Width || y + command.deltaY < 0 ||
-                            y + command.deltaY >= CurrentLevel.Height)
+                        if (x + command.DeltaX < 0 || x + command.DeltaX >= CurrentLevel.Width || y + command.DeltaY < 0 ||
+                            y + command.DeltaY >= CurrentLevel.Height)
                             throw new Exception($"The object {creatures[i].GetType()} falls out of the game field");
 
                         Animations.Add(
@@ -54,7 +60,7 @@ namespace EscapeFromMetMah
                                 Command = command,
                                 Creature = creatures[i],
                                 Location = new Point(x, y),
-                                TargetLogicalLocation = new Point(x + command.deltaX, y + command.deltaY)
+                                TargetLogicalLocation = new Point(x + command.DeltaX, y + command.DeltaY)
                             });
                     }
                 }
@@ -90,10 +96,7 @@ namespace EscapeFromMetMah
             foreach (var candidate in candidates)
                 foreach (var rival in candidates)
                     if (rival != candidate && candidate.IsConflict(rival))
-                    {
-                        // Решение всех возможных конфликтов
                         ResolvingConflict(aliveCandidates, candidate, rival);
-                    }
 
             return aliveCandidates;
         }
@@ -101,16 +104,13 @@ namespace EscapeFromMetMah
         private void ResolvingConflict(List<ICreature> aliveCandidates, ICreature candidate, ICreature rival)
         {
             if (candidate is Beer && rival is Player)
-            {
                 aliveCandidates.Remove(candidate);
-                CurrentLevel.CountBeer -= 1;
-            }
 
             if (candidate is Student && rival is Player)
-                CurrentLevel.CurrentDialogue = (candidate as Student).Dialogue;
+                CurrentDialogue = (candidate as Student).Dialogue;
 
             if (candidate is CleverStudent && rival is Player)
-                CurrentLevel.CurrentDialogue = (candidate as CleverStudent).Dialogue;
+                CurrentDialogue = (candidate as CleverStudent).Dialogue;
         }
 
         private List<ICreature>[,] GetCandidatesPerLocation()

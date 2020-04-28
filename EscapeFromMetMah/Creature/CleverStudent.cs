@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace EscapeFromMetMah
 {
     class CleverStudent : ICreature
     {
         public Status Status { get; private set; }
-        public Dialogue Dialogue { get; private set; }
-        private bool IsRest;
+        public readonly Dialogue Dialogue;
 
         public CleverStudent(Dialogue dialogue)
         {
@@ -20,7 +16,7 @@ namespace EscapeFromMetMah
 
         public Status GetStatus() => Status;
 
-        private Point? FindPlayer(Level level)
+        private static Point? FindPlayer(Level level)
         {
             Point? coordinatePlayer = null;
             for (int x = 0; x < level.Width; x++)
@@ -34,24 +30,18 @@ namespace EscapeFromMetMah
         {
             if (Status == Status.Inactive)
                 return new CreatureCommand();
-            if (IsRest)
-            {
-                IsRest = !IsRest;
-                return new CreatureCommand();
-            }
             var player = FindPlayer(level);
             if (player is null)
                 return new CreatureCommand();
             var path = Bfs.FindPaths(level.Map, new Point(x, y), new Point(player.Value.X, player.Value.Y));
             if (path is null)
                 return new CreatureCommand();
-            IsRest = !IsRest;
-            return new CreatureCommand() { deltaX = path.Previous.Value.X - x, deltaY = path.Previous.Value.Y - y };
+            return new CreatureCommand() { DeltaX = path.Previous.Value.X - x, DeltaY = path.Previous.Value.Y - y };
         }
 
         public bool IsConflict(ICreature conflictedObject)
         {
-            if (Status == Status.Active && (conflictedObject is Player || conflictedObject is Snake))
+            if (Status == Status.Active && (conflictedObject is Player || conflictedObject is Python))
             {
                 Status = Status.Inactive;
                 return true;

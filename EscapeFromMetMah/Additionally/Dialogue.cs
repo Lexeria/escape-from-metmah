@@ -7,7 +7,7 @@ namespace EscapeFromMetMah
     {
         public readonly string Text;
         private readonly string[] answers;
-        private readonly string CorrectAnswer;
+        private readonly string correctAnswer;
 
         public int CountAnswers => answers.Length;
 
@@ -15,14 +15,14 @@ namespace EscapeFromMetMah
         {
             Text = text;
             this.answers = answers;
-            CorrectAnswer = correctAnswer;
+            this.correctAnswer = correctAnswer;
         }
 
         public Dialogue(string text, string[] answers, int index)
         {
             Text = text;
             this.answers = answers;
-            CorrectAnswer = answers[index];
+            correctAnswer = answers[index];
         }
 
         public IEnumerable<string> GetAnswers()
@@ -31,12 +31,12 @@ namespace EscapeFromMetMah
                 yield return e;
         }
 
-        public bool IsTrueAnswer(string answer) => answer == CorrectAnswer;
+        public bool IsTrueAnswer(string answer) => answer == correctAnswer;
         public bool IsTrueAnswer(int index)
         {
             if (index < 0 || index >= answers.Length)
                 throw new ArgumentException();
-            return answers[index] == CorrectAnswer;
+            return answers[index] == correctAnswer;
         }
     }
 }

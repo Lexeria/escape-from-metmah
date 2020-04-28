@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace EscapeFromMetMah
 {
@@ -28,13 +25,13 @@ namespace EscapeFromMetMah
             if (x + next >= 0 && x + next <= level.Width - 1 &&
                 !level.Map[x + next, y].Any(x => x is Terrain) &&
                 level.Map[x + next, y + 1].Any(x => x is Terrain || x is Stairs))
-                return new CreatureCommand { deltaX = next };
+                return new CreatureCommand { DeltaX = next };
             return new CreatureCommand();
         }
 
         public bool IsConflict(ICreature conflictedObject)
         {
-            if (Status == Status.Active && (conflictedObject is Player || conflictedObject is Snake))
+            if (Status == Status.Active && (conflictedObject is Player || conflictedObject is Python))
             {
                 Status = Status.Inactive;
                 return true;

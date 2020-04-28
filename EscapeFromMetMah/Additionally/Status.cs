@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EscapeFromMetMah
+﻿namespace EscapeFromMetMah
 {
     public enum Status
     {

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EscapeFromMetMah
+﻿namespace EscapeFromMetMah
 {
-    public class Snake : ICreature
+    public class Python : ICreature
     {
         public Status Status { get; private set; }
         public CreatureCommand Act(Level level, int x, int y) => new CreatureCommand();
