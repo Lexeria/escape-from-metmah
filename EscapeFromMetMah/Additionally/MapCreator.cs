@@ -20,31 +20,21 @@ namespace EscapeFromMetMah
 
         private static ICreature CreateCreatureBySymbol(char symbol)
         {
-            switch (symbol)
+            return symbol switch
             {
-                case 'P':
-                    return new Player();
-                case 'T':
-                    return new Terrain();
-                case 'L':
-                    return new Stairs();
-                case 'S':
-                    // Здесь должно быть рандомное присвоение диалога
-                    return new Student(new Dialogue("Do you love me?",
+                'P' => new Player(),
+                'T' => new Terrain(),
+                'L' => new Stairs(),
+                'S' => new Student(new Dialogue("Do you love me?",
                                                 new string[] { "Yes", "No" },
-                                                "Yes"));
-                case 'C':
-                    // Здесь должно быть рандомное присвоение диалога
-                    return new CleverStudent(new Dialogue("Do you love me?",
+                                                "Yes")),
+                'C' => new CleverStudent(new Dialogue("Do you love me?",
                                                 new string[] { "Yes", "No" },
-                                                "Yes"));
-                case 'B':
-                    return new Beer();
-                case ' ':
-                    return null;
-                default:
-                    throw new Exception($"wrong character for ICreature {symbol}");
-            }
+                                                "Yes")),
+                'B' => new Beer(),
+                ' ' => null,
+                _ => throw new Exception($"wrong character for ICreature {symbol}"),
+            };
         }
     }
 }
