@@ -21,7 +21,7 @@ namespace EscapeFromMetMah
             Point? coordinatePlayer = null;
             for (int x = 0; x < level.Width; x++)
                 for (int y = 0; y < level.Height; y++)
-                    if (level.Map[x, y].Any(x => x is Player))
+                    if (level.Map[x, y].Any(creature => creature is Player))
                         coordinatePlayer = new Point(x, y);
             return coordinatePlayer;
         }

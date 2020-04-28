@@ -31,7 +31,7 @@ namespace EscapeFromMetMah
             var countBeer = 0;
             for (int x = 0; x < Width; x++)
                 for (int y = 0; x < Height; y++)
-                    if (Map[x, y].Any(x => x is Beer))
+                    if (Map[x, y].Any(creature=> creature is Beer))
                         countBeer++;
             return countBeer;
         }
