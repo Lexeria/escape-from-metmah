@@ -35,6 +35,11 @@ namespace EscapeFromMetMah
                     return new Student(new Dialogue("Do you love me?",
                                                 new string[] { "Yes", "No" },
                                                 "Yes"));
+                case 'C':
+                    // Здесь должно быть рандомное присвоение диалога
+                    return new CleverStudent(new Dialogue("Do you love me?",
+                                                new string[] { "Yes", "No" },
+                                                "Yes"));
                 case 'B':
                     return new Beer();
                 case ' ':

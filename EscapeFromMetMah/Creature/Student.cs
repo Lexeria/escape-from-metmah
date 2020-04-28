@@ -29,13 +29,12 @@ namespace EscapeFromMetMah
                 !level.Map[x + next, y].Any(x => x is Terrain) &&
                 level.Map[x + next, y + 1].Any(x => x is Terrain || x is Stairs))
                 return new CreatureCommand { deltaX = next };
-            // Тут должен быть супер мега крутой алгоритм поиска игрока и движения за ним
             return new CreatureCommand();
         }
 
         public bool IsConflict(ICreature conflictedObject)
         {
-            if (Status == Status.Active && conflictedObject is Player)
+            if (Status == Status.Active && (conflictedObject is Player || conflictedObject is Snake))
             {
                 Status = Status.Inactive;
                 return true;

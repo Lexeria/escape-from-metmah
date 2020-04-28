@@ -12,6 +12,7 @@ namespace EscapeFromMetMah
         private readonly List<Level> Levels;
         public List<CreatureAnimation> Animations { get; private set; }
         public bool IsGameOver { get; private set; }
+        public bool IsDialogueActivated => CurrentLevel.CurrentDialogue != null;
 
         public GameState(List<Level> levels)
         {
@@ -22,7 +23,7 @@ namespace EscapeFromMetMah
 
         public void BeginAct()
         {
-            if (CurrentLevel.CurrentDialogue != null)
+            if (IsDialogueActivated)
             {
                 var index = (int)CurrentLevel.KeyPressed - 49;
                 if (index < 0 || index >= CurrentLevel.CurrentDialogue.CountAnswers)
@@ -63,7 +64,7 @@ namespace EscapeFromMetMah
 
         public void EndAct()
         {
-            if (CurrentLevel.CurrentDialogue != null)
+            if (IsDialogueActivated)
                 return;
             var creaturesPerLocation = GetCandidatesPerLocation();
             for (var x = 0; x < CurrentLevel.Width; x++)
@@ -106,10 +107,10 @@ namespace EscapeFromMetMah
             }
 
             if (candidate is Student && rival is Player)
-            {
                 CurrentLevel.CurrentDialogue = (candidate as Student).Dialogue;
-                // Придумать, как выкидывать диалог со студентом.
-            }
+
+            if (candidate is CleverStudent && rival is Player)
+                CurrentLevel.CurrentDialogue = (candidate as CleverStudent).Dialogue;
         }
 
         private List<ICreature>[,] GetCandidatesPerLocation()
