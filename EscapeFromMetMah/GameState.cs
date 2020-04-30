@@ -11,7 +11,7 @@ namespace EscapeFromMetMah
         private Level CurrentLevel;
         private int IndexCurrentLevel;
         private readonly List<Level> Levels;
-        public List<CreatureAnimation> Animations { get; }
+        public List<CreatureAction> Actions { get; }
         public bool IsGameOver { get; private set; }
         public Dialogue CurrentDialogue { get; private set; }
         public bool IsDialogueActivated => CurrentDialogue != null;
@@ -20,7 +20,7 @@ namespace EscapeFromMetMah
         {
             Levels = levels;
             CurrentLevel = levels[0];
-            Animations = new List<CreatureAnimation>();
+            Actions = new List<CreatureAction>();
         }
 
         public void SetKeyPressed(Keys key) => CurrentLevel.KeyPressed = key;
@@ -38,7 +38,7 @@ namespace EscapeFromMetMah
                     CurrentDialogue = null;
                 return;
             }
-            Animations.Clear();
+            Actions.Clear();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
                 {
@@ -54,8 +54,8 @@ namespace EscapeFromMetMah
                             y + command.DeltaY >= CurrentLevel.Height)
                             throw new Exception($"The object {creatures[i].GetType()} falls out of the game field");
 
-                        Animations.Add(
-                            new CreatureAnimation
+                        Actions.Add(
+                            new CreatureAction
                             {
                                 Command = command,
                                 Creature = creatures[i],
@@ -120,7 +120,7 @@ namespace EscapeFromMetMah
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
                     creatures[x, y] = new List<ICreature>();
-            foreach (var e in Animations)
+            foreach (var e in Actions)
             {
                 var x = e.TargetLogicalLocation.X;
                 var y = e.TargetLogicalLocation.Y;

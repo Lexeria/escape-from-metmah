@@ -4,6 +4,6 @@
     {
         Status GetStatus();
         bool IsConflict(ICreature conflictedObject);
-        CreatureCommand Act(Level level, int x, int y);
+        Move Act(Level level, int x, int y);
     }
 }

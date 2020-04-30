@@ -2,9 +2,9 @@
 
 namespace EscapeFromMetMah
 {
-    class CreatureAnimation
+    class CreatureAction
     {
-        public CreatureCommand Command;
+        public Move Command;
         public ICreature Creature;
         public Point Location;
         public Point TargetLogicalLocation;

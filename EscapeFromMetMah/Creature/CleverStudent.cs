@@ -26,17 +26,17 @@ namespace EscapeFromMetMah
             return coordinatePlayer;
         }
 
-        public CreatureCommand Act(Level level, int x, int y)
+        public Move Act(Level level, int x, int y)
         {
             if (Status == Status.Inactive)
-                return new CreatureCommand();
+                return new Move();
             var player = FindPlayer(level);
             if (player is null)
-                return new CreatureCommand();
+                return new Move();
             var path = Bfs.FindPaths(level.Map, new Point(x, y), new Point(player.Value.X, player.Value.Y));
             if (path is null)
-                return new CreatureCommand();
-            return new CreatureCommand() { DeltaX = path.Previous.Value.X - x, DeltaY = path.Previous.Value.Y - y };
+                return new Move();
+            return new Move() { DeltaX = path.Previous.Value.X - x, DeltaY = path.Previous.Value.Y - y };
         }
 
         public bool IsConflict(ICreature conflictedObject)

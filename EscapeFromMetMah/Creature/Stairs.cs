@@ -4,7 +4,7 @@
     {
         public Status Status { get; private set; }
 
-        public CreatureCommand Act(Level level, int x, int y) => new CreatureCommand();
+        public Move Act(Level level, int x, int y) => new Move();
 
         public Status GetStatus() => Status;
 

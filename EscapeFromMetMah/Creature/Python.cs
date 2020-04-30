@@ -3,10 +3,11 @@
     public class Python : ICreature
     {
         public Status Status { get; private set; }
-        public CreatureCommand Act(Level level, int x, int y) => new CreatureCommand();
+        public Move Act(Level level, int x, int y) => new Move();
 
         public Status GetStatus() => Status;
 
-        public bool IsConflict(ICreature conflictedObject) => false;
+        public bool IsConflict(ICreature conflictedObject) =>
+            conflictedObject is Student || conflictedObject is CleverStudent;
     }
 }
