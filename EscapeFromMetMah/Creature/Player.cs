@@ -9,27 +9,28 @@ namespace EscapeFromMetMah
 
         public Move Act(Level level, int x, int y)
         {
-            if (level.KeyPressed == Keys.R && !level.Map[x, y].Any(creature => creature is Python))
-                level.Map[x, y].Add(new Python());
+            if (level.KeyPressed == Keys.R && !level.CheckCreature(x, y, typeof(Python)))
+                level.AddCreature(x, y, new Python());
             if (y + 1 <= level.Height - 1 &&
-                !level.Map[x, y + 1].Any(creature => creature is Terrain || creature is Stairs))
+                !(level.CheckCreature(x, y + 1, typeof(Terrain)) ||
+                level.CheckCreature(x, y + 1, typeof(Stairs))))
                 return new Move { DeltaY = 1 };
 
             if (level.KeyPressed == Keys.Up && y - 1 >= 0 &&
-                level.Map[x, y].Any(creature => creature is Stairs) &&
-                !level.Map[x, y - 1].Any(creature => creature is Terrain))
+                level.CheckCreature(x, y, typeof(Stairs)) &&
+                !level.CheckCreature(x, y - 1, typeof(Terrain)))
                 return new Move { DeltaY = -1 };
 
             if (level.KeyPressed == Keys.Down && y + 1 <= level.Height - 1 &&
-                level.Map[x, y + 1].Any(creature => creature is Stairs))
+                level.CheckCreature(x, y + 1, typeof(Stairs)))
                 return new Move { DeltaY = 1 };
 
             if (level.KeyPressed == Keys.Left && x - 1 >= 0 &&
-                !level.Map[x - 1, y].Any(creature => creature is Terrain))
+                !level.CheckCreature(x - 1, y, typeof(Terrain)))
                 return new Move { DeltaX = -1 };
 
             if (level.KeyPressed == Keys.Right && x + 1 <= level.Width - 1 &&
-                !level.Map[x + 1, y].Any(creature => creature is Terrain))
+                !level.CheckCreature(x + 1, y, typeof(Terrain)))
                 return new Move { DeltaX = 1 };
 
             return new Move();

@@ -21,7 +21,7 @@ namespace EscapeFromMetMah
             Point? coordinatePlayer = null;
             for (int x = 0; x < level.Width; x++)
                 for (int y = 0; y < level.Height; y++)
-                    if (level.Map[x, y].Any(creature => creature is Player))
+                    if (level.CheckCreature(x, y, typeof(Player)))
                         coordinatePlayer = new Point(x, y);
             return coordinatePlayer;
         }
@@ -33,7 +33,7 @@ namespace EscapeFromMetMah
             var player = FindPlayer(level);
             if (player is null)
                 return new Move();
-            var path = Bfs.FindPaths(level.Map, new Point(x, y), new Point(player.Value.X, player.Value.Y));
+            var path = Bfs.FindPaths(level.TextInitiallyMap, new Point(x, y), new Point(player.Value.X, player.Value.Y));
             if (path is null)
                 return new Move();
             return new Move() { DeltaX = path.Previous.Value.X - x, DeltaY = path.Previous.Value.Y - y };

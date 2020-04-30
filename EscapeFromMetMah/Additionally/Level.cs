@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -6,18 +7,12 @@ namespace EscapeFromMetMah
 {
     public class Level
     {
-        public readonly List<ICreature>[,] Map; // Лист, потому что в одной клетке могут находиться несколько сущностей.
+        private readonly List<ICreature>[,] Map; // Лист, потому что в одной клетке могут находиться несколько сущностей.
         public bool IsOver => CountBeer() == 0;
         public readonly int Width;
         public readonly int Height;
         public Keys KeyPressed; // Для управления игроком на уровне.
-
-        public Level(List<ICreature>[,] map)
-        {
-            Map = map;
-            Width = Map.GetLength(0);
-            Height = Map.GetLength(1);
-        }
+        public readonly string TextInitiallyMap;
 
         public Level(string map)
         {
@@ -34,6 +29,42 @@ namespace EscapeFromMetMah
                     if (Map[x, y].Any(creature=> creature is Beer))
                         countBeer++;
             return countBeer;
+        }
+
+        public void AddCreature(int x, int y, ICreature creature)
+        {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+                throw new ArgumentException();
+
+            Map[x, y].Add(creature);
+        }
+
+        public void RemoveCreature(int x, int y, ICreature creature)
+        {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+                throw new ArgumentException();
+
+            Map[x, y].Remove(creature);
+        }
+
+        public void SetCreatures(int x, int y, IEnumerable<ICreature> creatures) =>
+            Map[x, y] = creatures.ToList();
+
+        public bool CheckCreature(int x, int y, Type typeCreature)
+        {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+                throw new ArgumentException();
+
+            return Map[x, y].Any(z => z != null && z.GetType() == typeCreature);
+        }
+
+        public IEnumerable<ICreature> GetCreatures(int x, int y)
+        {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+                throw new ArgumentException();
+
+            foreach (var e in Map[x, y])
+                yield return e;
         }
     }
 }

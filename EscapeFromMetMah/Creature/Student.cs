@@ -23,8 +23,9 @@ namespace EscapeFromMetMah
             var random = new Random();
             var next = random.Next(-1, 2);
             if (x + next >= 0 && x + next <= level.Width - 1 &&
-                !level.Map[x + next, y].Any(creature => creature is Terrain) &&
-                level.Map[x + next, y + 1].Any(creature => creature is Terrain || creature is Stairs))
+                !level.CheckCreature(x + next, y, typeof(Terrain)) &&
+                (level.CheckCreature(x + next, y + 1, typeof(Terrain)) ||
+                level.CheckCreature(x + next, y + 1, typeof(Stairs))))
                 return new Move { DeltaX = next };
             return new Move();
         }

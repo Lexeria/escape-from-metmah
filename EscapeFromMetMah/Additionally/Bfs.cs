@@ -74,6 +74,12 @@ namespace EscapeFromMetMah
             return null;
         }
 
+        public static SinglyLinkedList<Point> FindPaths(string textMap, Point start, Point finish)
+        {
+            var map = MapCreator.CreateMap(textMap);
+            return FindPaths(map, start, finish);
+        }
+
         private static void AddPoint(Queue<SinglyLinkedList<Point>> queue, SinglyLinkedList<Point> cell)
         {
             var point = cell.Value;

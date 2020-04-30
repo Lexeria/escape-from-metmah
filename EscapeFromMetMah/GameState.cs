@@ -42,7 +42,7 @@ namespace EscapeFromMetMah
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
                 {
-                    var creatures = CurrentLevel.Map[x, y];
+                    var creatures = CurrentLevel.GetCreatures(x, y).ToList();
                     if (creatures == null) continue;
 
                     for (int i = 0; i < creatures.Count; i++)
@@ -62,6 +62,8 @@ namespace EscapeFromMetMah
                                 Location = new Point(x, y),
                                 TargetLogicalLocation = new Point(x + command.DeltaX, y + command.DeltaY)
                             });
+                        // Если в клетке появились новые существа
+                        creatures = CurrentLevel.GetCreatures(x, y).ToList();
                     }
                 }
 
@@ -75,7 +77,7 @@ namespace EscapeFromMetMah
             var creaturesPerLocation = GetCandidatesPerLocation();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
-                    CurrentLevel.Map[x, y] = SelectWinnerCandidatePerLocation(creaturesPerLocation, x, y);
+                    CurrentLevel.SetCreatures(x, y, SelectWinnerCandidatePerLocation(creaturesPerLocation, x, y));
 
             if (CurrentLevel.IsOver)
             {
