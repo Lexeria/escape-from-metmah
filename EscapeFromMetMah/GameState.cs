@@ -15,6 +15,7 @@ namespace EscapeFromMetMah
         public bool IsGameOver { get; private set; }
         public Dialogue CurrentDialogue { get; private set; }
         public bool IsDialogueActivated => CurrentDialogue != null;
+        public int PatienceScale { get; private set; }
         public int WidthCurrentLevel => CurrentLevel.Width;
         public int HeightCurrentLevel => CurrentLevel.Height;
 
@@ -23,6 +24,7 @@ namespace EscapeFromMetMah
             Levels = levels.ToList();
             CurrentLevel = Levels[0];
             Actions = new List<CreatureAction>();
+            PatienceScale = CurrentLevel.Height * CurrentLevel.Width * 2;
         }
 
         public void SetKeyPressed(Keys key) => CurrentLevel.KeyPressed = key;
@@ -65,8 +67,10 @@ namespace EscapeFromMetMah
 
         public void EndAct()
         {
+            IsGameOver = PatienceScale-- < 0;
             if (IsDialogueActivated)
             {
+                PatienceScale -= 2;
                 var index = (int)CurrentLevel.KeyPressed - 49;
                 if (index < 0 || index >= CurrentDialogue.CountAnswers)
                     return;
