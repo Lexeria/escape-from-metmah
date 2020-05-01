@@ -148,5 +148,18 @@ namespace Tests
             gameState.EndAct();
             gameState.IsDialogueActivated.Should().BeFalse();
         }
+
+        [Test]
+        public void GameState_GameShouldOver_WhenPatienceScaleLessZero()
+        {
+            var levels = new List<Level> { new Level("PCB \r\nTTTL\r\nS CL\r\nTTTT") };
+            var gameState = new GameState(levels);
+            for (int i = 0; i < gameState.HeightCurrentLevel * gameState.WidthCurrentLevel * 2; i++)
+            {
+                gameState.BeginAct();
+                gameState.EndAct();
+            }
+            gameState.IsGameOver.Should().BeTrue();
+        }
     }
 }

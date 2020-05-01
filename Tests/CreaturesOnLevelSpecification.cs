@@ -69,10 +69,7 @@ namespace Tests
             var cleverStudent = testLevel.GetCreatures(point.X, point.Y).FirstOrDefault();
             cleverStudent.Should().NotBeNull();
             for (int i = 0; i < 3; i++)
-            {
-                var action = cleverStudent.Act(testLevel, point.X, point.Y);
                 CheckOffset(cleverStudent, point.X, point.Y, 0, 0);
-            }
         }
 
         [Test]
