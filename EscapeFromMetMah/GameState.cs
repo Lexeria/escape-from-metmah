@@ -89,6 +89,7 @@ namespace EscapeFromMetMah
                 {
                     IndexCurrentLevel += 1;
                     CurrentLevel = Levels[IndexCurrentLevel];
+                    PatienceScale = CurrentLevel.Height * CurrentLevel.Width * 2;
                 }
                 else
                     IsGameOver = true;
