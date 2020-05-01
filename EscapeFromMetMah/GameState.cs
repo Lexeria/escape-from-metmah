@@ -29,16 +29,9 @@ namespace EscapeFromMetMah
 
         public void BeginAct()
         {
-            Actions.Clear();
             if (IsDialogueActivated)
-            {
-                var index = (int)CurrentLevel.KeyPressed - 49;
-                if (index < 0 || index >= CurrentDialogue.CountAnswers)
-                    return;
-                if (CurrentDialogue.IsCorrectAnswer(index))
-                    CurrentDialogue = null;
                 return;
-            }
+            Actions.Clear();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
                 {
@@ -73,7 +66,14 @@ namespace EscapeFromMetMah
         public void EndAct()
         {
             if (IsDialogueActivated)
+            {
+                var index = (int)CurrentLevel.KeyPressed - 49;
+                if (index < 0 || index >= CurrentDialogue.CountAnswers)
+                    return;
+                if (CurrentDialogue.IsCorrectAnswer(index))
+                    CurrentDialogue = null;
                 return;
+            }
             var creaturesPerLocation = GetCandidatesPerLocation();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)

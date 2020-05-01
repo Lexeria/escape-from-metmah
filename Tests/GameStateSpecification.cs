@@ -110,16 +110,43 @@ namespace Tests
         }
 
         [Test]
-        public void GameState_NotShouldUpdateActions_WhenActivatedDialogue()
+        public void GameState_ShouldNotUpdateActions_WhenActivatedDialogue()
         {
             var levels = new List<Level> { new Level("PCB\r\nTTT") };
             var gameState = new GameState(levels);
             gameState.BeginAct();
             gameState.EndAct();
             gameState.IsDialogueActivated.Should().BeTrue();
+            var actions = gameState.Actions;
+            for (int i = 0; i < 5; i++)
+            {
+                gameState.BeginAct();
+                gameState.EndAct();
+            }
+            gameState.Actions.Should().BeEquivalentTo(actions);
+        }
+
+        [Test]
+        public void GameState_AllCreaturesShouldMove_AfterDeactivatedDialogue()
+        {
+            var levels = new List<Level> { new Level("PCB \r\nTTTL\r\nS CL\r\nTTTT") };
+            var gameState = new GameState(levels);
             gameState.BeginAct();
             gameState.EndAct();
-            gameState.Actions.Should().BeEmpty();
+            gameState.IsDialogueActivated.Should().BeTrue();
+            var dialogue = gameState.CurrentDialogue;
+            var answers = dialogue.GetAnswers().ToList();
+            for (int i = 0; i < answers.Count; i++)
+            {
+                if (dialogue.IsCorrectAnswer(i))
+                {
+                    gameState.SetKeyPressed((Keys)(i+49));
+                    break;
+                }
+            }
+            gameState.BeginAct();
+            gameState.EndAct();
+            gameState.IsDialogueActivated.Should().BeFalse();
         }
     }
 }
