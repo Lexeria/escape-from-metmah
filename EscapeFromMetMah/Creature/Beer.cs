@@ -1,6 +1,6 @@
 ﻿namespace EscapeFromMetMah
 {
-    class Beer : ICreature
+    public class Beer : ICreature
     {
         public Status Status { get; private set; }
 

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EscapeFromMetMah
 {
-    class CleverStudent : ICreature
+    public class CleverStudent : ICreature
     {
         public Status Status { get; private set; }
         public readonly Dialogue Dialogue;
@@ -28,6 +28,10 @@ namespace EscapeFromMetMah
 
         public Move Act(Level level, int x, int y)
         {
+            if (y + 1 <= level.Height - 1 &&
+                !(level.CheckCreature(x, y + 1, typeof(Terrain)) ||
+                level.CheckCreature(x, y + 1, typeof(Stairs))))
+                return new Move { DeltaY = 1 };
             if (Status == Status.Inactive)
                 return new Move();
             var player = FindPlayer(level);

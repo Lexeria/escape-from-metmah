@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace EscapeFromMetMah
 {
-    class Player : ICreature
+    public class Player : ICreature
     {
         public Status Status { get; private set; }
 
@@ -39,6 +39,8 @@ namespace EscapeFromMetMah
         public Status GetStatus() => Status;
 
         public bool IsConflict(ICreature conflictedObject) =>
-            conflictedObject is Student || conflictedObject is Beer;
+            conflictedObject is Student ||
+            conflictedObject is CleverStudent ||
+            conflictedObject is Beer;
     }
 }

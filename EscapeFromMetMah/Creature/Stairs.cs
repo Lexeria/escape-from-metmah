@@ -1,6 +1,6 @@
 ﻿namespace EscapeFromMetMah
 {
-    class Stairs : ICreature
+    public class Stairs : ICreature
     {
         public Status Status { get; private set; }
 

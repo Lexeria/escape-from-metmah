@@ -7,45 +7,6 @@ namespace EscapeFromMetMah
 {
     public static class Bfs
     {
-        public class SinglyLinkedList<T> : IEnumerable<T>
-        {
-            public readonly T Value;
-            public readonly SinglyLinkedList<T> Previous;
-            public readonly int Length;
-
-            public SinglyLinkedList(T value, SinglyLinkedList<T> previous = null)
-            {
-                Value = value;
-                Previous = previous;
-                Length = previous?.Length + 1 ?? 1;
-            }
-
-            public IEnumerator<T> GetEnumerator()
-            {
-                yield return Value;
-                var pathItem = Previous;
-                while (pathItem != null)
-                {
-                    yield return pathItem.Value;
-                    pathItem = pathItem.Previous;
-                }
-            }
-
-            public SinglyLinkedList<T> Reverse()
-            {
-                var answer = new SinglyLinkedList<T>(Value);
-                var next = Previous;
-                while (next != null)
-                {
-                    answer = new SinglyLinkedList<T>(next.Value, answer);
-                    next = next.Previous;
-                }
-                return answer;
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
         public static SinglyLinkedList<Point> FindPaths(List<ICreature>[,] map, Point start, Point finish)
         {
             if (start == finish)
@@ -63,7 +24,7 @@ namespace EscapeFromMetMah
                 if (!visited.Contains(point) && point.X >= 0 && point.X < width && point.Y >= 0 && point.Y < height - 1 &&
                     !map[point.X, point.Y].Any(x => x is Terrain) &&
                     (map[point.X, point.Y + 1].Any(x => x is Terrain || x is Stairs) ||
-                    map[point.X, point.Y].Any(x => x is Stairs)))
+                    (map[point.X, point.Y].Any(x => x is Stairs) && path.Previous.Value.Y < point.Y)))
                 {
                     if (finish == point)
                         return path.Reverse();

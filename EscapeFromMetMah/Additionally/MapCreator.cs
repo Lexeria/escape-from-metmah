@@ -14,7 +14,12 @@ namespace EscapeFromMetMah
             var result = new List<ICreature>[rows[0].Length, rows.Length];
             for (var x = 0; x < rows[0].Length; x++)
                 for (var y = 0; y < rows.Length; y++)
-                    result[x, y] = new List<ICreature> { CreateCreatureBySymbol(rows[y][x]) };
+                {
+                    var creature = CreateCreatureBySymbol(rows[y][x]);
+                    result[x, y] = new List<ICreature>();
+                    if (creature != null)
+                        result[x, y].Add(creature);
+                }
             return result;
         }
 

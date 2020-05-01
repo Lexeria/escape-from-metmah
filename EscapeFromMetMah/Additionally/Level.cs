@@ -19,6 +19,7 @@ namespace EscapeFromMetMah
             Map = MapCreator.CreateMap(map);
             Width = Map.GetLength(0);
             Height = Map.GetLength(1);
+            TextInitiallyMap = map;
         }
 
         public int CountBeer()
@@ -39,12 +40,20 @@ namespace EscapeFromMetMah
             Map[x, y].Add(creature);
         }
 
-        public void RemoveCreature(int x, int y, ICreature creature)
+        public void RemoveCreature(int x, int y, Type typeCreature)
         {
             if (x < 0 || x >= Width || y < 0 || y >= Height)
                 throw new ArgumentException();
 
-            Map[x, y].Remove(creature);
+            ICreature creature = null;
+            foreach (var e in Map[x, y])
+                if (e.GetType() == typeCreature)
+                {
+                    creature = e;
+                    break;
+                }
+            if (creature != null)
+                Map[x, y].Remove(creature);
         }
 
         public void SetCreatures(int x, int y, IEnumerable<ICreature> creatures) =>

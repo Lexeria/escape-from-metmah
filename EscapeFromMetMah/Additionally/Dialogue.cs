@@ -31,8 +31,8 @@ namespace EscapeFromMetMah
                 yield return e;
         }
 
-        public bool IsTrueAnswer(string answer) => answer == correctAnswer;
-        public bool IsTrueAnswer(int index)
+        public bool IsCorrectAnswer(string answer) => answer == correctAnswer;
+        public bool IsCorrectAnswer(int index)
         {
             if (index < 0 || index >= answers.Length)
                 throw new ArgumentException();

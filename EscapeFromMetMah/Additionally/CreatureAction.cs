@@ -2,7 +2,7 @@
 
 namespace EscapeFromMetMah
 {
-    class CreatureAction
+    public class CreatureAction
     {
         public Move Command;
         public ICreature Creature;

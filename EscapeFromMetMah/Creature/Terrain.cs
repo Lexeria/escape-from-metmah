@@ -1,6 +1,6 @@
 ﻿namespace EscapeFromMetMah
 {
-    class Terrain : ICreature
+    public class Terrain : ICreature
     {
         public Status Status { get; private set; }
 

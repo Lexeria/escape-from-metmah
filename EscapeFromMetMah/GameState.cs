@@ -6,39 +6,39 @@ using System.Windows.Forms;
 
 namespace EscapeFromMetMah
 {
-    class GameState
+    public class GameState
     {
-        private Level CurrentLevel;
-        private int IndexCurrentLevel;
+        public Level CurrentLevel { get; private set; }
+        public int IndexCurrentLevel { get; private set; }
         private readonly List<Level> Levels;
         public List<CreatureAction> Actions { get; }
         public bool IsGameOver { get; private set; }
         public Dialogue CurrentDialogue { get; private set; }
         public bool IsDialogueActivated => CurrentDialogue != null;
+        public int WidthCurrentLevel => CurrentLevel.Width;
+        public int HeightCurrentLevel => CurrentLevel.Height;
 
-        public GameState(List<Level> levels)
+        public GameState(IEnumerable<Level> levels)
         {
-            Levels = levels;
-            CurrentLevel = levels[0];
+            Levels = levels.ToList();
+            CurrentLevel = Levels[0];
             Actions = new List<CreatureAction>();
         }
 
         public void SetKeyPressed(Keys key) => CurrentLevel.KeyPressed = key;
-        public int GetWidthCurrentLevel() => CurrentLevel.Width;
-        public int GetHeightCurrentLevel() => CurrentLevel.Height;
 
         public void BeginAct()
         {
+            Actions.Clear();
             if (IsDialogueActivated)
             {
                 var index = (int)CurrentLevel.KeyPressed - 49;
                 if (index < 0 || index >= CurrentDialogue.CountAnswers)
                     return;
-                if (CurrentDialogue.IsTrueAnswer(index))
+                if (CurrentDialogue.IsCorrectAnswer(index))
                     CurrentDialogue = null;
                 return;
             }
-            Actions.Clear();
             for (var x = 0; x < CurrentLevel.Width; x++)
                 for (var y = 0; y < CurrentLevel.Height; y++)
                 {
